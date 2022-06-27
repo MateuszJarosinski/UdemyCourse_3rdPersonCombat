@@ -12,10 +12,12 @@ namespace StateMachines.Player
         private const float AnimatorDampTime = 0.1f;
         public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+        private const float CrossFadeDuration = 0.1f;
+
         public override void Enter()
         {
             stateMachine.InputReader.TargetEvent += OnTarget;
-            stateMachine.Animator.Play(_freeLookBlendTreeHash);
+            stateMachine.Animator.CrossFadeInFixedTime(_freeLookBlendTreeHash, CrossFadeDuration);
         }
         public override void Tick(float deltaTime)
         {
