@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using StateMachines.Player;
+using Unity.Mathematics;
 using UnityEngine;
 
 public abstract class PlayerBaseState : State
@@ -32,5 +33,17 @@ public abstract class PlayerBaseState : State
         lookPos.y = 0;
         
         stateMachine.transform.rotation = Quaternion.LookRotation(lookPos);
+    }
+
+    protected void ReturnToLocomotion()
+    {
+        if (stateMachine.Targeter.CurrentTarget != null)
+        {
+            stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
+        }
+        else
+        {
+            stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
+        }
     }
 }
